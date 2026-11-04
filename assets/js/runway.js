@@ -31,16 +31,19 @@
     /* ---------- the line of looks */
     const people = LOOKS.map((l, i) => {
         const e = document.createElement('div');
-        e.className = 'm';
+        const c = HS.CUT[l.img];   // a cut-out stands on the line by itself, a photo stands in an arch
+        e.className = c ? 'm cut' : 'm';
         e.dataset.i = i;
-        e.innerHTML = `<div class="a"><img alt="Look ${i + 1}: ${HS.esc(l.title)} saree" draggable="false" decoding="async"
-            src="${HS.IMG(l.img, 900, 1500)}" style="object-position:${l.pos}"></div>`;
+        const alt = `Look ${i + 1}: ${HS.esc(l.title)} saree`;
+        e.innerHTML = c
+            ? `<img class="ci" alt="${alt}" draggable="false" decoding="async" src="${HS.cut(l.img)}">`
+            : `<div class="a"><img alt="${alt}" draggable="false" decoding="async" src="${HS.IMG(l.img, 900, 1500)}" style="object-position:${l.pos}"></div>`;
         const img = e.querySelector('img');
         const ok = () => img.classList.add('ok');
         img.complete && img.naturalWidth ? ok() : img.addEventListener('load', ok, { once: true });
         img.addEventListener('error', ok, { once: true });
         line.append(e);
-        return { e, img, f: '', o: '' };
+        return { e, img, r: c ? c.w / c.h : R, f: '', o: '' };
     });
 
     /* ---------- the rail of pieces */
@@ -48,7 +51,7 @@
         const e = document.createElement('article');
         e.className = 'card' + (i % 2 ? ' alt' : '');
         e.innerHTML = `<button class="fav" data-fav="${p.id}" aria-pressed="false" aria-label="Save ${HS.esc(p.name)}">${HS.heart}</button>
-            <a class="shot" href="product.html?id=${p.id}" draggable="false" tabindex="-1" aria-hidden="true"><img src="${HS.IMG(p.img, 500, 640)}" alt="" loading="lazy" draggable="false"></a>
+            <a class="shot" href="product.html?id=${p.id}" draggable="false" tabindex="-1" aria-hidden="true">${HS.CUT[p.img] ? `<img class="cutimg" src="${HS.cut(p.img)}" alt="" loading="lazy" draggable="false">` : `<img src="${HS.IMG(p.img, 500, 640)}" alt="" loading="lazy" draggable="false">`}</a>
             <div class="meta">
                 <h3 class="wide"><a href="product.html?id=${p.id}">${HS.esc(p.name)}</a></h3>
                 <span>${HS.money(p.price)}</span>
@@ -115,7 +118,7 @@
             const x = lerp(K.KX, d) * sw;
             const feetY = lerp(K.KF, d) * sh;
             const h = lerp(K.KH, d) * sh;
-            const w = h * R;
+            const w = h * item.r;
             const blur = lerp(KB, d);
             const opacity = lerp(KO, d);
 
@@ -126,7 +129,7 @@
 
             const filter = blur > .1 ? `blur(${(blur / scale).toFixed(1)}px)` : 'none';
 
-            item.e.style.width = `${(baseH * R).toFixed(1)}px`;
+            item.e.style.width = `${(baseH * item.r).toFixed(1)}px`;
             item.e.style.height = `${baseH.toFixed(1)}px`;
             item.e.style.zIndex = 100 - Math.round(d * 10);
             item.e.style.transform = `translate3d(${left.toFixed(1)}px,${top.toFixed(1)}px,0) scale(${scale.toFixed(4)})`;
@@ -252,9 +255,15 @@
         seen();
     });
 
+    // over the stage, sideways scrolling (trackpad swipe or shift + wheel) walks the line and
+    // up/down scrolls the page; over the rail, the wheel moves the pieces as in the original
     function onWheel(e) {
+        const onRail = e.currentTarget === rail && !mobile;
+        const dx = e.shiftKey ? e.deltaY : e.deltaX;
+        const delta = onRail ? e.deltaY + e.deltaX : (Math.abs(dx) > Math.abs(e.deltaY) ? dx : 0);
+        if (!delta) return;
         e.preventDefault();
-        target += Math.max(-120, Math.min(120, e.deltaY + e.deltaX)) / 420;
+        target += Math.max(-120, Math.min(120, delta)) / 420;
         seen();
         clearTimeout(wheelTimer);
         wheelTimer = setTimeout(() => { target = Math.round(target); }, 150);
@@ -264,8 +273,8 @@
 
     document.addEventListener('keydown', e => {
         if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) || document.documentElement.classList.contains('menu-open')) return;
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); go(1); }
-        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(-1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
         else if (e.key === 'Enter' && document.activeElement === stage) location.href = shopLook.href;
     });
     $('next').addEventListener('click', () => go(1));

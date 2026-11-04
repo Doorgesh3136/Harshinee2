@@ -18,9 +18,7 @@
 <link rel="stylesheet" href="assets/css/site.css">
 <style>
 /* Runway: the Maison Vell line of looks, now in sarees */
-html,body{height:100%}
-body{overflow:hidden;overscroll-behavior:none}
-.page{height:100svh;min-height:520px;display:grid;grid-template-rows:auto 1fr;background:var(--paper)}
+.page{height:100svh;min-height:520px;max-height:1100px;display:grid;grid-template-rows:auto 1fr;background:var(--paper)}
 main{position:relative;display:grid;grid-template-columns:1fr calc(372*var(--u));min-height:0}
 .stage{position:relative;overflow:hidden;min-width:0;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:none;outline:none;
   background:radial-gradient(60% 55% at 10% 52%,rgba(255,250,242,.9),transparent 70%),linear-gradient(transparent 60%,rgba(255,252,248,.72) 100%),linear-gradient(90deg,#f6ede3 0%,#efe2d4 38%,#f4e9de 62%,#faf4ee 100%)}
@@ -114,6 +112,25 @@ main{position:relative;display:grid;grid-template-columns:1fr calc(372*var(--u))
 }
 @media (max-width:820px) and (max-height:640px){main{grid-template-rows:1fr 170px}.card{width:140px}}
 @media (min-width:821px) and (max-height:620px){.intro p{display:none}}
+
+.cue{position:absolute;z-index:3;left:50%;bottom:calc(16*var(--u));transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;font-size:calc(8.5*var(--u));letter-spacing:.18em;color:var(--mid);cursor:pointer}
+.cue i{width:1px;height:calc(26*var(--u));background:linear-gradient(var(--mid),transparent);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.tag .shop{display:inline-flex;align-items:center;gap:.8em}
+@media (max-width:820px){
+  .page{height:calc(100svh - var(--tab));min-height:480px}
+  .rail{touch-action:pan-y}
+  .cue{display:none}
+  .tag .shop{background:var(--ink);color:var(--paper);border:0;padding:12px 16px;margin-top:12px;font-size:9px}
+}
+.hint-m{display:none}
+@media (max-width:820px){.hint-d{display:none}.hint-m{display:inline}}
+/* a cut-out model stands on the line like the Maison Vell originals */
+.m.cut .ci{display:block;position:relative;width:100%;height:100%;object-fit:contain;object-position:50% 100%;pointer-events:none;-webkit-user-drag:none;
+  filter:drop-shadow(0 18px 24px rgba(70,40,30,.12))}
+.m.cut:before{left:10%;right:10%;bottom:-1.2%;height:2.6%}
+.shot img.cutimg{border-radius:0;transform-origin:50% 100%}
+.card .shot:has(.cutimg){background:none}
 </style>
 </head>
 <body data-page="runway">
@@ -147,19 +164,57 @@ main{position:relative;display:grid;grid-template-columns:1fr calc(372*var(--u))
       <div class="tag">
         <div class="look wide" aria-live="polite" aria-atomic="true"><span>Look</span><span class="win"><span class="roll" id="roll"></span></span></div>
         <p class="lname" id="lname"></p>
-        <a class="shop wide" id="shopLook" href="lookbook.html#look-1">Shop the look</a>
+        <a class="shop wide" id="shopLook" href="lookbook.html#look-1">Shop the look <span aria-hidden="true">&rarr;</span></a>
       </div>
       <div class="ctrl wide">
         <button id="prev" aria-label="Previous look"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
         <div class="dots" id="dots" aria-hidden="true"></div>
         <button id="next" aria-label="Next look"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
       </div>
-      <div class="hint wide" id="hint" aria-hidden="true">Drag to walk the line <i></i></div>
+      <div class="hint wide" id="hint" aria-hidden="true"><span class="hint-d">Drag to walk the line</span><span class="hint-m">Swipe for the next look</span> <i></i></div>
+      <a class="cue wide" href="#explore" aria-label="Scroll to explore">Explore<i></i></a>
       <div class="ring" id="ring" aria-hidden="true"><span>View</span></div>
     </section>
     <aside class="rail" id="rail" aria-label="Pieces in this look"></aside>
   </main>
 </div>
+<div class="explore" id="explore">
+  <div class="wrap">
+    <div class="ex-head"><div><p class="eyebrow">Shop by category</p><h2 class="h2">Find your outfit</h2></div><a class="link" href="shop.html">Shop all</a></div>
+    <div class="cats" id="cats"></div>
+  </div>
+  <div class="wrap" style="margin-top:clamp(56px,8vw,100px)">
+    <div class="ex-head"><div><p class="eyebrow">New in</p><h2 class="h2">Sarees this season</h2></div><a class="link" href="shop.html?f=saree">See all sarees</a></div>
+    <div class="strip" id="strip"></div>
+  </div>
+  <div class="wrap">
+    <section class="visit-band" aria-labelledby="vb">
+      <div><p class="eyebrow">Visit us</p><h2 class="h2" id="vb" style="margin-top:12px">Try the drape in person</h2>
+        <p class="copy" style="margin-top:12px">Two boutiques in Mauritius. Message us before you come and we will have your sizes ready.</p>
+        <div class="row"><a class="btn" href="visit.html">Book a visit</a><a class="btn wa" href="https://wa.me/23057990933" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Zm0 16.4a7.4 7.4 0 0 1-3.8-1l-.3-.2-2.7.7.7-2.6-.2-.3A7.4 7.4 0 1 1 12 19.4Zm4.1-5.5c-.2-.1-1.3-.7-1.5-.7s-.4-.1-.5.1-.6.7-.7.9-.3.2-.5 0a6 6 0 0 1-3-2.6c-.2-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.7-1.6c-.2-.4-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.8 2 4.6 4.6 0 0 0 1 2.4 10.6 10.6 0 0 0 4 3.6c1.5.6 2.1.7 2.8.6a2.4 2.4 0 0 0 1.6-1.1 2 2 0 0 0 .1-1.1c0-.2-.2-.2-.4-.3Z"/></svg> WhatsApp</a></div></div>
+      <ul><li><span>Royal Road, Lallmatie</span><a href="https://www.google.com/maps/search/?api=1&query=Harshinee+Fashion+Royal+Road+Lallmatie+Mauritius" target="_blank" rel="noopener">Directions &rarr;</a></li>
+        <li><span>Bypass, St Julien d'Hotman</span><a href="https://www.google.com/maps/search/?api=1&query=Harshinee+Fashion+St+Julien+d%27Hotman+Mauritius" target="_blank" rel="noopener">Directions &rarr;</a></li>
+        <li><span>5254 7777 · 418 2082</span><a href="tel:+23052547777">Call &rarr;</a></li></ul>
+    </section>
+  </div>
+</div>
+<footer class="foot">
+    <div class="wrap">
+        <div class="cols">
+            <div>
+                <h4>Harshinee</h4>
+                <p>Sarees, bridal lehengas and festive wear, chosen in India and worn in Mauritius.</p>
+                <form class="news" novalidate><label class="sr" for="nl">Email for new arrivals</label><input id="nl" type="email" placeholder="Email for new arrivals"><button>Join</button></form>
+            </div>
+            <div><h4>Shop</h4><ul><li><a href="shop.html?f=saree">Sarees</a></li><li><a href="shop.html?f=bridal">Bridal lehengas</a></li><li><a href="shop.html?f=lehenga">Party lehengas</a></li><li><a href="shop.html?f=gown">Gowns &amp; anarkalis</a></li><li><a href="shop.html?f=groom">Groom &amp; men</a></li></ul></div>
+            <div><h4>The House</h4><ul><li><a href="index.html">Runway</a></li><li><a href="lookbook.html">Lookbook</a></li><li><a href="house.html">Our story</a></li><li><a href="house.html#drapes">How to drape</a></li><li><a href="house.html#care">Saree care</a></li></ul></div>
+            <div><h4>Visit</h4><ul><li><a href="visit.html">Royal Road, Lallmatie</a></li><li><a href="visit.html">Bypass, St Julien d'Hotman</a></li><li><a href="https://wa.me/23057990933" target="_blank" rel="noopener">WhatsApp 5799 0933</a></li><li><a href="tel:+23052547777">5254 7777</a> · <a href="tel:+2304182082">418 2082</a></li></ul></div>
+        </div>
+        <p class="word" aria-hidden="true">Harshinee</p>
+        <div class="base"><p>&copy; <span data-year>2026</span> Harshinee Fashion, Mauritius</p><p><a href="https://www.facebook.com/harshineefashionofficial/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/harshineefashionofficial/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@harshineefashionofficial" target="_blank" rel="noopener">TikTok</a></p></div>
+    </div>
+</footer>
+<a class="wa-float" href="https://wa.me/23057990933" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Zm0 16.4a7.4 7.4 0 0 1-3.8-1l-.3-.2-2.7.7.7-2.6-.2-.3A7.4 7.4 0 1 1 12 19.4Zm4.1-5.5c-.2-.1-1.3-.7-1.5-.7s-.4-.1-.5.1-.6.7-.7.9-.3.2-.5 0a6 6 0 0 1-3-2.6c-.2-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.7-1.6c-.2-.4-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.8 2 4.6 4.6 0 0 0 1 2.4 10.6 10.6 0 0 0 4 3.6c1.5.6 2.1.7 2.8.6a2.4 2.4 0 0 0 1.6-1.1 2 2 0 0 0 .1-1.1c0-.2-.2-.2-.4-.3Z"/></svg></a>
 <div class="wait" id="wait" aria-hidden="true"><div><svg viewBox="0 0 24 24"><path d="M5 22V11c0-4 3.2-7 7-9 3.8 2 7 5 7 9v11" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="13.5" r="1.9" fill="#9e1f2c"/></svg><span class="wide">Harshinee</span><em></em></div></div>
 <nav class="drawer" id="drawer" aria-label="Menu" aria-hidden="true">
     <div class="big"><a class="wide on" href="index.html">Runway<small>Six looks</small></a><a class="wide" href="house.html">The House<small>Our story & craft</small></a><a class="wide" href="lookbook.html">Lookbook<small>Wedding Season 2027</small></a><a class="wide" href="shop.html">Shop<small>Every saree</small></a><a class="wide" href="visit.html">Visit us<small>Two boutiques</small></a></div>
@@ -177,6 +232,8 @@ main{position:relative;display:grid;grid-template-columns:1fr calc(372*var(--u))
     </form>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<nav class="tabbar" aria-label="Main"><a href="index.html" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V10.5C5 6.5 8.2 4 12 2.5c3.8 1.5 7 4 7 8V21"/><circle cx="12" cy="12.5" r="1.6" fill="currentColor" stroke="none"/></svg><span>Home</span></a><a href="shop.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7v9H4zM13 4h7v5h-7zM13 11h7v9h-7zM4 15h7v5H4z"/></svg><span>Shop</span></a><a href="lookbook.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c2.5 3 2.5 6 0 9-2.5-3-2.5-6 0-9Z"/><path d="M12 12c3 2.5 6 2.5 9 0-3-2.5-6-2.5-9 0Z"/><path d="M12 12c-3 2.5-6 2.5-9 0 3-2.5 6-2.5 9 0Z"/><path d="M12 12v9"/></svg><span>Looks</span></a><a href="visit.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-6.2-6-11a6 6 0 0 1 12 0c0 4.8-6 11-6 11Z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Visit</span></a><a href="bag.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg><b data-cart>0</b><span>Bag</span></a></nav>
+<script src="assets/js/cut.js"></script>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/site.js"></script>
 <script src="assets/js/runway.js"></script>

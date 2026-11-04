@@ -31,10 +31,10 @@ HS.FABRIC = {
 
 /* id, name, kind (saree | outfit), category, occasion, price (Rs), photo, second photo, tag, description */
 HS.PRODUCTS = [
-    ["red-banarasi-silk-saree", "Red Banarasi Silk Saree", 'saree', 'saree', '', 4500, '1610030469983-98e550d6193c', '1610030469668-8e9f641aaf27', "Bestseller",
-        "Pure silk from the looms of Varanasi with a woven gold zari border. The red saree every wardrobe needs once."],
-    ["emerald-silk-saree", "Emerald Silk Saree", 'saree', 'saree', '', 3900, '1679006831648-7c9ea12e5807', '1727430228383-aa1fb59db8bf', "",
-        "Deep emerald silk with a fine gold border that catches the light at every step."],
+    ["red-banarasi-silk-saree", "Purple & Gold Banarasi Silk Saree", 'saree', 'saree', '', 4500, '1610030469983-98e550d6193c', '1610030469668-8e9f641aaf27', "Bestseller",
+        "Deep purple silk from the looms of Varanasi with a wide woven gold zari border."],
+    ["emerald-silk-saree", "Sage Green Silk Saree", 'saree', 'saree', '', 3900, '1679006831648-7c9ea12e5807', '1727430228383-aa1fb59db8bf', "",
+        "Soft sage green silk with a woven pattern, worn with a temple necklace."],
     ["purple-gold-kanjeevaram-saree", "Purple & Gold Kanjeevaram Saree", 'saree', 'saree', '', 6500, '1641699862936-be9f49b1c38d', '1610030469983-98e550d6193c', "New",
         "Heavy silk from Kanchipuram in royal purple with a rich gold border and pallu."],
     ["coral-silk-saree", "Coral Silk Saree", 'saree', 'saree', '', 2900, '1617627143750-d86bc21e42bb', '1769275061202-cf3ef67d7279', "",
@@ -45,8 +45,30 @@ HS.PRODUCTS = [
         "A rich festive saree that looks right at every wedding you are invited to this season."],
     ["red-floral-saree", "Red Floral Saree", 'saree', 'saree', '', 2500, '1610047520958-b42ebcd2f6cb', '1610030469668-8e9f641aaf27', "",
         "Red florals on a flowing drape, light enough for the summer wedding season."],
-    ["scarlet-party-saree", "Scarlet Party Saree", 'saree', 'saree', '', 3200, '1610030469668-8e9f641aaf27', '1610047520958-b42ebcd2f6cb', "",
-        "Scarlet with a shimmer border, made for sangeet nights."],
+    ["scarlet-party-saree", "Black & Silver Banarasi Saree", 'saree', 'saree', '', 3200, '1610030469668-8e9f641aaf27', '1610047520958-b42ebcd2f6cb', "",
+        "Black silk woven with silver zari, with a velvet blouse. Made for evening receptions."],
+    ["emerald-ruffle-saree", "Emerald Ruffle Saree", 'saree', 'saree', '', 4600, "1756483492198-8ca91227489b", "", "New",
+        "Bottle green georgette with ruffles down the pleats and a heavily embroidered blouse."],
+    ["ivory-ruffle-saree", "Ivory Ruffle Saree", 'saree', 'saree', '', 4200, "1756483510889-dd6c3d9e0a17", "", "New",
+        "Ivory and sand georgette with cascading ruffles that move with every step."],
+    ["red-embellished-saree", "Red Embellished Saree", 'saree', 'saree', '', 5800, "1756483496916-5ebab85028df", "", "New",
+        "Deep red with a gold border and an open-back embroidered blouse."],
+    ["ivory-embroidered-saree", "Ivory Embroidered Saree", 'saree', 'saree', '', 5600, "1787753650891-c6e2625071df", "", "New",
+        "Cream with tonal embroidery all over, worn with a red silk blouse."],
+    ["lilac-floral-saree", "Purple Floral Saree", 'saree', 'saree', '', 2700, "1610189026297-df356264479c", "", "",
+        "Purple with large lilac florals and a contrast blue blouse."],
+    ["white-sunflower-saree", "White Embroidered Saree", 'saree', 'saree', '', 3900, "1710972200161-ada775a26401", "", "",
+        "White with fine embroidery across the drape, worn with a black blouse."],
+    ["olive-purple-silk-saree", "Olive & Purple Silk Saree", 'saree', 'saree', '', 3600, "1612273882937-44c5313400e5", "", "",
+        "Olive silk with a purple border and pallu."],
+    ["moonlight-white-saree", "Moonlight White Saree", 'saree', 'saree', '', 3400, "1670955108982-921a94cbe35f", "", "",
+        "Pure white with a navy striped blouse. Simple and striking."],
+    ["marigold-silk-saree", "Marigold Silk Saree", 'saree', 'saree', '', 4800, "1597897545000-7c99a285f27e", "", "",
+        "Marigold silk with a red and gold border, the colour of festival mornings."],
+    ["red-gold-silk-saree", "Red & Gold Silk Saree", 'saree', 'saree', '', 4400, "1732850195162-32afc5726455", "", "",
+        "Red silk with a wide gold border and pallu."],
+    ["bengal-white-red-saree", "White & Red Bengal Saree", 'saree', 'saree', '', 2200, "1756887957725-2111152d4e4f", "", "",
+        "The classic white saree with a red border, worn for Durga Puja and every celebration after."],
     ["crimson-zari-bridal-lehenga", "Crimson Zari Bridal Lehenga", 'outfit', 'bridal', 'bridal', 18500, '1721324807083-e9ddaa99310e', '1654764746225-e63f5e90facd', "Bestseller",
         "A bridal lehenga made for the wedding day: heavy work, a full flare and a matching dupatta."],
     ["royal-red-bridal-lehenga", "Royal Red Bridal Lehenga", 'outfit', 'bridal', 'bridal', 21900, '1610047614301-13c63f00c032', '1610047614256-023d7c028d0b', "New",
@@ -117,16 +139,34 @@ HS.PRODUCTS = [
 
 /* The six runway looks, in order. pos is the focal point of the photo; pieces are the two items shown in the rail. */
 HS.LOOKS = [
-    { name: 'Lal', title: 'Red Banarasi', img: '1610030469983-98e550d6193c', pos: '50% 18%', pieces: ['red-banarasi-silk-saree', 'scarlet-party-saree'],
-      story: 'Red silk from Varanasi with a gold zari border. The saree of weddings, worn the classic way.' },
-    { name: 'Panna', title: 'Emerald Silk', img: '1679006831648-7c9ea12e5807', pos: '50% 18%', pieces: ['emerald-silk-saree', 'printed-georgette-saree'],
-      story: 'Emerald silk with a fine gold border, for the wedding guest who wants to be remembered.' },
-    { name: 'Rani', title: 'Purple Kanjeevaram', img: '1641699862936-be9f49b1c38d', pos: '50% 18%', pieces: ['purple-gold-kanjeevaram-saree', 'crimson-zari-bridal-lehenga'],
-      story: 'Heavy Kanchipuram silk in royal purple and gold. A saree with the presence of a bridal lehenga.' },
-    { name: 'Gulabi', title: 'Coral Silk', img: '1617627143750-d86bc21e42bb', pos: '50% 18%', pieces: ['coral-silk-saree', 'pink-mirror-work-lehenga'],
-      story: 'Coral and pink with gold at the border, made for haldi mornings and garden functions.' },
-    { name: 'Utsav', title: 'Festive Silk', img: '1727430228383-aa1fb59db8bf', pos: '50% 18%', pieces: ['wedding-guest-saree', 'blush-pink-anarkali-gown'],
-      story: 'A rich festive drape for the reception, the sangeet and every celebration in between.' },
-    { name: 'Phool', title: 'Red Floral', img: '1610047520958-b42ebcd2f6cb', pos: '50% 18%', pieces: ['red-floral-saree', 'red-embroidered-anarkali'],
-      story: 'Red florals on a light, flowing drape. Easy to wear from the first ceremony to the last dance.' }
+    { name: 'Rajsi', title: 'Purple Banarasi', img: '1610030469983-98e550d6193c', pos: '50% 18%', pieces: ['red-banarasi-silk-saree', 'purple-gold-kanjeevaram-saree'],
+      story: 'Deep purple silk from Varanasi with a wide gold zari border. The saree of weddings, worn the classic way.' },
+    { name: 'Panna', title: 'Emerald Ruffle', img: '1756483492198-8ca91227489b', pos: '50% 18%', pieces: ['emerald-ruffle-saree', 'emerald-silk-saree'],
+      story: 'Bottle green with ruffles down the pleats and an embroidered blouse. Modern, but still six yards.' },
+    { name: 'Chandni', title: 'Ivory Ruffle', img: '1756483510889-dd6c3d9e0a17', pos: '50% 18%', pieces: ['ivory-ruffle-saree', 'moonlight-white-saree'],
+      story: 'Moonlight in georgette. The ruffles fall from the pallu and the whole drape moves like water.' },
+    { name: 'Raat', title: 'Black & Silver', img: '1610030469668-8e9f641aaf27', pos: '50% 18%', pieces: ['scarlet-party-saree', 'lilac-floral-saree'],
+      story: 'Black silk woven with silver zari and a velvet blouse, for receptions that run late into the night.' },
+    { name: 'Rani', title: 'Red Embellished', img: '1756483496916-5ebab85028df', pos: '50% 18%', pieces: ['red-embellished-saree', 'red-gold-silk-saree'],
+      story: 'Deep red with a gold border and an open-back blouse. A saree that looks as good walking away.' },
+    { name: 'Kora', title: 'Ivory Embroidered', img: '1787753650891-c6e2625071df', pos: '50% 18%', pieces: ['ivory-embroidered-saree', 'white-sunflower-saree'],
+      story: 'Cream embroidery and a red silk blouse. Simple pieces that make a strong look together.' }
 ];
+
+/* Categories for the home page tiles (photos from the main-branch site) */
+HS.CATS = [
+    ['saree', 'Sarees', '1641699862936-be9f49b1c38d'],
+    ['bridal', 'Bridal lehengas', '1654764746225-e63f5e90facd'],
+    ['lehenga', 'Party lehengas', '1733937140732-2cc70a1d7017'],
+    ['gown', 'Anarkalis', '1761571260010-8aa90a08c934'],
+    ['groom', 'Sherwanis', '1760080838961-4208536db385'],
+    ['men', 'Kurtas', '1767775498862-d4740ce574ce']
+];
+
+/* Cut-outs: photos with the background removed (made by tools/cutouts, listed in
+   assets/js/cut.js). HS.pic shows the cut-out when there is one, else the photo. */
+HS.CUT = HS.CUT || {};
+HS.cut = id => HS.CUT[id] ? `assets/img/cut/${id}.webp` : '';
+HS.pic = (id, w, h, alt = '', lazy = true) => HS.CUT[id]
+    ? `<img class="cutimg" src="${HS.cut(id)}" alt="${alt}"${lazy ? ' loading="lazy"' : ''} decoding="async">`
+    : `<img src="${HS.IMG(id, w, h)}" alt="${alt}"${lazy ? ' loading="lazy"' : ''} decoding="async">`;

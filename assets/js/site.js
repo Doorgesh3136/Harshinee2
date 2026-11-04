@@ -31,6 +31,7 @@
         store.set('hs_saved', saved);
         $$('[data-cart]').forEach(e => {
             e.textContent = count();
+            e.dataset.n = count();
             if (bump) { e.classList.remove('bump'); void e.offsetWidth; e.classList.add('bump'); }
         });
         $$('[data-fav]').forEach(b => b.setAttribute('aria-pressed', saved.includes(b.dataset.fav)));
@@ -145,9 +146,10 @@
         const tag = p.tag ? `<span class="tag${/Bestseller|Groom/.test(p.tag) ? ' red' : ''}">${esc(p.tag)}</span>` : '';
         const load = eager ? 'eager' : 'lazy';
         return `<article class="pc reveal">
-            <a class="ph" href="product.html?id=${p.id}" aria-label="${esc(p.name)}">
-                <img src="${HS.IMG(p.img, 600, 800)}" srcset="${HS.IMG(p.img, 400, 533)} 400w, ${HS.IMG(p.img, 600, 800)} 600w, ${HS.IMG(p.img, 900, 1200)} 900w" sizes="(max-width:820px) 50vw, 25vw" alt="${esc(p.name)}" loading="${load}" decoding="async">
-                ${p.img2 ? `<img class="b" src="${HS.IMG(p.img2, 600, 800)}" alt="" loading="lazy" decoding="async">` : ''}
+            <a class="ph${HS.CUT[p.img] ? ' cutbg' : ''}" href="product.html?id=${p.id}" aria-label="${esc(p.name)}">
+                ${HS.CUT[p.img] ? `<img class="cutimg" src="${HS.cut(p.img)}" alt="${esc(p.name)}" loading="${load}" decoding="async">`
+                    : `<img src="${HS.IMG(p.img, 600, 800)}" srcset="${HS.IMG(p.img, 400, 533)} 400w, ${HS.IMG(p.img, 600, 800)} 600w, ${HS.IMG(p.img, 900, 1200)} 900w" sizes="(max-width:820px) 50vw, 25vw" alt="${esc(p.name)}" loading="${load}" decoding="async">
+                ${p.img2 ? `<img class="b" src="${HS.IMG(p.img2, 600, 800)}" alt="" loading="lazy" decoding="async">` : ''}`}
                 ${tag}
             </a>
             <button class="fav" data-fav="${p.id}" aria-pressed="${saved.includes(p.id)}" aria-label="Save ${esc(p.name)}">${heart}</button>
@@ -217,6 +219,7 @@
             p.img2 ? { img: p.img2, pos: '50% 30%', z: 1, label: 'Second view' } : { img: p.img, pos: '50% 22%', z: 1.7, label: 'Close up' },
             { img: p.img, pos: '50% 80%', z: 1.9, label: 'Detail' }
         ];
+        if (HS.CUT[p.img]) views.unshift({ img: p.img, cut: true, pos: '50% 100%', z: 1, label: 'Cut-out' });
         $('#crumb').textContent = p.name;
         $('#pname').textContent = p.name;
         $('#pprice').textContent = money(p.price);
@@ -225,14 +228,16 @@
         const main = $('#main');
         const show = i => {
             const v = views[i];
-            main.src = HS.IMG(v.img, 1200, 1600);
+            main.src = v.cut ? HS.cut(v.img) : HS.IMG(v.img, 1200, 1600);
+            main.classList.toggle('cutimg', !!v.cut);
+            main.parentElement.classList.toggle('cutbg', !!v.cut);
             main.alt = `${p.name}, ${v.label.toLowerCase()}`;
             main.style.objectPosition = v.pos;
             main.style.transform = `scale(${v.z})`;
             main.style.transformOrigin = v.pos;
             $$('#thumbs button').forEach((b, j) => b.setAttribute('aria-current', i === j));
         };
-        $('#thumbs').innerHTML = views.map((v, i) => `<button aria-label="${v.label}"><img src="${HS.IMG(v.img, 240, 320)}" alt="" style="object-position:${v.pos};transform:scale(${v.z});transform-origin:${v.pos}" loading="lazy"></button>`).join('');
+        $('#thumbs').innerHTML = views.map((v, i) => `<button aria-label="${v.label}"${v.cut ? ' class="cutbg"' : ''}><img${v.cut ? ' class="cutimg"' : ''} src="${v.cut ? HS.cut(v.img) : HS.IMG(v.img, 240, 320)}" alt="" style="object-position:${v.pos};transform:scale(${v.z});transform-origin:${v.pos}" loading="lazy"></button>`).join('');
         $$('#thumbs button').forEach((b, i) => b.addEventListener('click', () => show(i)));
         show(0);
         let sx = null;
@@ -289,14 +294,14 @@
             const pieces = l.pieces.map(byId);
             const total = pieces.reduce((n, p) => n + p.price, 0);
             return `<section class="look-sec${i % 2 ? ' flip' : ''}" id="look-${i + 1}" aria-labelledby="lt${i}">
-                <figure class="arch reveal"><img src="${HS.IMG(l.img, 1100, 1500)}" srcset="${HS.IMG(l.img, 600, 820)} 600w, ${HS.IMG(l.img, 1100, 1500)} 1100w" sizes="(max-width:820px) 92vw, 44vw" alt="Look ${i + 1}: ${esc(l.title)} saree" loading="${i < 1 ? 'eager' : 'lazy'}" style="object-position:${l.pos}"></figure>
+                <figure class="arch reveal${HS.CUT[l.img] ? ' cutbg' : ''}">${HS.CUT[l.img] ? `<img class="cutimg" src="${HS.cut(l.img)}" alt="Look ${i + 1}: ${esc(l.title)} saree" loading="${i < 1 ? 'eager' : 'lazy'}">` : `<img src="${HS.IMG(l.img, 1100, 1500)}" srcset="${HS.IMG(l.img, 600, 820)} 600w, ${HS.IMG(l.img, 1100, 1500)} 1100w" sizes="(max-width:820px) 92vw, 44vw" alt="Look ${i + 1}: ${esc(l.title)} saree" loading="${i < 1 ? 'eager' : 'lazy'}" style="object-position:${l.pos}">`}</figure>
                 <div class="look-copy reveal">
                     <p class="num wide">Look <span>0${i + 1}</span></p>
                     <h2 class="h1" id="lt${i}">${esc(l.name)}</h2>
                     <p class="eyebrow">${esc(l.title)}</p>
                     <p class="lede">${esc(l.story)}</p>
                     <ul class="pieces">${pieces.map(p => `<li>
-                        <a href="product.html?id=${p.id}"><img src="${HS.IMG(p.img, 160, 200)}" alt="" loading="lazy"></a>
+                        <a href="product.html?id=${p.id}">${HS.CUT[p.img] ? `<img class="cutimg" src="${HS.cut(p.img)}" alt="" loading="lazy">` : `<img src="${HS.IMG(p.img, 160, 200)}" alt="" loading="lazy">`}</a>
                         <div><a class="wide" href="product.html?id=${p.id}">${esc(p.name)}</a><span>${money(p.price)}</span></div>
                         <button class="fav" data-fav="${p.id}" aria-pressed="${saved.includes(p.id)}" aria-label="Save ${esc(p.name)}">${heart}</button>
                     </li>`).join('')}</ul>
@@ -336,7 +341,7 @@
                 list.innerHTML = bag.map((l, i) => {
                     const p = byId(l.id);
                     return `<article class="line">
-                        <a class="ph" href="product.html?id=${p.id}"><img src="${HS.IMG(p.img, 300, 400)}" alt="${esc(p.name)}" loading="lazy"></a>
+                        <a class="ph" href="product.html?id=${p.id}">${HS.CUT[p.img] ? `<img class="cutimg" src="${HS.cut(p.img)}" alt="${esc(p.name)}" loading="lazy">` : `<img src="${HS.IMG(p.img, 300, 400)}" alt="${esc(p.name)}" loading="lazy">`}</a>
                         <div class="info">
                             <small>${esc(HS.FABRIC[p.fabric])}</small>
                             <h3 class="wide"><a href="product.html?id=${p.id}">${esc(p.name)}</a></h3>
@@ -397,6 +402,18 @@
             if (v('msg')) lines.push('', v('msg'));
             window.open(wa(lines.join('\n')), '_blank', 'noopener');
         });
+        reveal();
+    }
+
+    /* ---------- home: categories and new sarees under the runway */
+    if (PAGE === 'runway') {
+        const cats = $('#cats');
+        if (cats) cats.innerHTML = HS.CATS.map(([k, l, img]) => {
+            const n = HS.PRODUCTS.filter(p => p.fabric === k).length;
+            return `<a class="cat reveal" href="shop.html?f=${k}">${HS.pic(img, 500, 733, 'cat')}<span>${esc(l)} · ${n}</span></a>`;
+        }).join('');
+        const strip = $('#strip');
+        if (strip) strip.innerHTML = HS.PRODUCTS.filter(p => p.kind === 'saree' && HS.CUT[p.img]).slice(0, 8).map(p => card(p)).join('');
         reveal();
     }
 

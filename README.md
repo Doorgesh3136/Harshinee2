@@ -25,12 +25,20 @@ Everything about the products is in **`assets/js/data.js`**:
 
 Photos are Unsplash photo IDs, the same ones the main-branch site uses. To use the shop's own photos, put them in `assets/img/` and change `HS.IMG` in `data.js` to return `'assets/img/' + id`.
 
+## Cut-out photos
+The models on the runway, and most product photos, have their backgrounds removed so they stand on the page like the Maison Vell originals.
+These cut-outs live in `assets/img/cut/` and are made by a GitHub Action (`.github/workflows/cutouts.yml`):
+1. Add the Unsplash photo ID to `tools/cutouts/photos.txt` and push to the `saree-house` branch.
+2. The action downloads the photo, removes the background and commits `assets/img/cut/<id>.webp`, with contact sheets in `tools/cutouts/out/` to check the result.
+3. Add the ID to `assets/js/cut.js` (copy its `w` and `h` from `tools/cutouts/manifest.json`) to use the cut-out on the site.
+
 ## Files
 | File | What it does |
 |---|---|
 | `assets/css/site.css` | Shared styles: header, menu, product cards and every content page |
 | `assets/js/site.js` | Bag, saved pieces, search, mobile menu and the logic for each page |
 | `assets/js/runway.js` | The runway on the home page |
+| `assets/js/cut.js` | The list of approved cut-outs |
 
 The header, menu and footer are written into each page. If you change one, change the others to match.
 
