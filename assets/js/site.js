@@ -142,7 +142,7 @@
     const heart = '<svg viewBox="0 0 24 24"><path d="M12 20S3.5 15 3.5 9A4.6 4.6 0 0 1 12 6.6 4.6 4.6 0 0 1 20.5 9C20.5 15 12 20 12 20Z"/></svg>';
     HS.heart = heart;
     function card(p, eager) {
-        const tag = p.tag ? `<span class="tag${/Bridal|Look/.test(p.tag) ? ' red' : ''}">${esc(p.tag)}</span>` : '';
+        const tag = p.tag ? `<span class="tag${/Bestseller|Groom/.test(p.tag) ? ' red' : ''}">${esc(p.tag)}</span>` : '';
         const load = eager ? 'eager' : 'lazy';
         return `<article class="pc reveal">
             <a class="ph" href="product.html?id=${p.id}" aria-label="${esc(p.name)}">
@@ -249,7 +249,7 @@
             opts.innerHTML = BLOUSE.map((b, i) => `<label class="opt"><input type="radio" name="blouse" value="${b}" ${i ? '' : 'checked'}><span>${b}</span></label>`).join('');
         } else {
             $('#blouseWrap').hidden = true;
-            $('#dims').textContent = 'Comes in a gift box. Each piece is checked in store before it is sent.';
+            $('#dims').textContent = 'Sizes and fitting are confirmed with you in store or on WhatsApp. Each piece is checked in store before it is sent.';
             $('#drapeRow').hidden = true;
         }
         let qty = 1;

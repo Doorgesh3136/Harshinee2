@@ -1,128 +1,132 @@
 /* =============================================================================
-   Harshinee: shop data. Edit sarees, looks and contact details here.
-   Photos are Unsplash photo IDs. To use your own photos, put them in
-   assets/img/ and change HS.IMG to return 'assets/img/' + id.
+   Harshinee: shop data. Edit products, looks and contact details here.
+   Photos are Unsplash photo IDs, the same photos as the main-branch site.
+   To use your own photos, put them in assets/img/ and change HS.IMG to
+   return 'assets/img/' + id.
    ============================================================================= */
 window.HS = window.HS || {};
 
 HS.SHOP = {
     name: 'Harshinee',
     full: 'Harshinee Fashion',
-    whatsapp: '23057990933',
-    whatsappLabel: '5799 0933',
-    phones: [['5254 7777', '+23052547777'], ['418 2082', '+2304182082']],
-    boutiques: [
-        { name: 'Royal Road, Lallmatie', map: 'https://www.google.com/maps/search/?api=1&query=Harshinee+Fashion+Royal+Road+Lallmatie+Mauritius' },
-        { name: "Bypass, St Julien d'Hotman", map: 'https://www.google.com/maps/search/?api=1&query=Harshinee+Fashion+St+Julien+d%27Hotman+Mauritius', isNew: true }
-    ],
-    social: [
-        ['Facebook', 'https://www.facebook.com/harshineefashionofficial/', '40K+'],
-        ['TikTok', 'https://www.tiktok.com/@harshineefashionofficial', '16K+'],
-        ['Instagram', 'https://www.instagram.com/harshineefashionofficial/', '13K']
-    ]
+    whatsapp: '23057990933'
 };
 
 HS.IMG = (id, w = 800, h) =>
-    `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}${h ? `&h=${h}` : ''}&q=78`;
+    `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}${h ? `&h=${h}&crop=top` : ''}&q=78`;
 
-/* Filters on the shop page. A filter matches a saree's fabric, occasion or kind. */
+/* Filters on the shop page (the key is a product's category) */
 HS.FILTERS = [
     ['all', 'All'],
-    ['banarasi', 'Banarasi'],
-    ['kanjeevaram', 'Kanjeevaram'],
-    ['silk', 'Soft silk'],
-    ['organza', 'Organza & tissue'],
-    ['georgette', 'Georgette'],
-    ['chiffon', 'Chiffon'],
-    ['handloom', 'Handloom cotton'],
-    ['bridal', 'Bridal'],
-    ['jewellery', 'Jewellery']
+    ['saree', 'Sarees'],
+    ['bridal', 'Bridal lehengas'],
+    ['lehenga', 'Party lehengas'],
+    ['gown', 'Gowns & anarkalis'],
+    ['groom', 'Groom sherwanis'],
+    ['men', "Men's kurtas"]
 ];
 HS.FABRIC = {
-    banarasi: 'Banarasi silk', kanjeevaram: 'Kanjeevaram silk', silk: 'Soft silk', organza: 'Organza & tissue',
-    georgette: 'Georgette', chiffon: 'Chiffon', handloom: 'Handloom cotton', velvet: 'Silk velvet', jewellery: 'Jewellery'
+    saree: 'Saree', bridal: 'Bridal lehenga', lehenga: 'Party lehenga', gown: 'Gown & anarkali', groom: 'Groom sherwani', men: "Men's kurta"
 };
 
-/* id, name, kind (saree | jewellery), fabric, occasion, price (Rs), photo, second photo, tag, description */
+/* id, name, kind (saree | outfit), category, occasion, price (Rs), photo, second photo, tag, description */
 HS.PRODUCTS = [
-    ['panna-emerald-banarasi', 'Emerald Banarasi Silk Saree', 'saree', 'banarasi', 'festive', 6900, '1756483492198-8ca91227489b', '', 'Look 01',
-        'Pure silk from the looms of Varanasi, with a gold zari border and a heavy woven pallu. Styled with an ornate contrast blouse.'],
-    ['chandni-ivory-ruffle', 'Ivory Ruffle Georgette Saree', 'saree', 'georgette', 'party', 4200, '1756483510889-dd6c3d9e0a17', '', 'Look 02',
-        'Featherlight georgette in ivory and tan, finished with cascading ruffles that move with every step.'],
-    ['rani-red-velvet-bridal', 'Rani Red Velvet Bridal Saree', 'saree', 'velvet', 'bridal', 18900, '1756483496916-5ebab85028df', '', 'Look 03',
-        'Deep red silk velvet worked by hand with dense gold zardozi. Made for the wedding day and the photographs after.'],
-    ['kora-ivory-embroidered', 'Ivory Embroidered Silk Saree', 'saree', 'silk', 'festive', 5600, '1787753650890-bae0eb536cf5', '1787753650891-c6e2625071df', 'Look 04',
-        'Cream silk with tonal floral embroidery along the border, worn with a red silk blouse.'],
-    ['shubhra-pearl-white', 'Pearl White Embellished Saree', 'saree', 'organza', 'party', 7800, '1756483510837-e79455e52188', '', 'Look 05',
-        'Sheer white organza scattered with pearl and sequin work. Quietly dramatic for receptions and evening functions.'],
-    ['gulabi-rose-chiffon', 'Rose Pink Chiffon Saree', 'saree', 'chiffon', 'party', 3400, '1729101146067-4432849b7029', '', 'Look 06',
-        'Soft rose chiffon that pleats beautifully and stays light through a long day of celebrations.'],
-
-    ['red-banarasi', 'Red Banarasi Silk Saree', 'saree', 'banarasi', 'festive', 4500, '1610030469983-98e550d6193c', '', 'Bestseller',
-        'A classic red Banarasi with a woven gold border. The saree every wardrobe needs once.'],
-    ['purple-silver-banarasi', 'Purple & Silver Banarasi Saree', 'saree', 'banarasi', 'festive', 5200, '1698657169585-0fce00d3ad9c', '', '',
-        'Royal purple silk with silver zari buttis across the body and a rich silver pallu.'],
-    ['purple-gold-kanjeevaram', 'Purple & Gold Kanjeevaram Saree', 'saree', 'kanjeevaram', 'festive', 6500, '1641699862936-be9f49b1c38d', '', 'New',
-        'Heavy mulberry silk from Kanchipuram with a contrast gold temple border.'],
-    ['sindoor-red-silk', 'Sindoor Red Kanjeevaram Saree', 'saree', 'kanjeevaram', 'bridal', 5900, '1710449823856-b04144b66b8a', '', '',
-        'Sindoor red silk with a fine gold border. A favourite for the haldi, the wedding and every puja after.'],
-    ['temple-border-kanjeevaram', 'Red & Gold Temple Border Kanjeevaram', 'saree', 'kanjeevaram', 'bridal', 8900, '1732850195162-32afc5726455', '', 'Bridal',
-        'Bridal Kanjeevaram with a wide temple border and a pallu woven solid in gold.'],
-    ['coral-soft-silk', 'Coral Soft Silk Saree', 'saree', 'silk', 'festive', 2900, '1617627143750-d86bc21e42bb', '', '',
-        'Pink and orange soft silk with a gold border. Light to wear, easy to drape.'],
-    ['wedding-guest-silk', 'Wedding Guest Silk Saree', 'saree', 'silk', 'festive', 3500, '1727430228383-aa1fb59db8bf', '', '',
-        'A rich festive silk that looks right at every wedding you are invited to this season.'],
-    ['jade-tissue', 'Jade Embroidered Tissue Saree', 'saree', 'organza', 'festive', 5400, '1756483510818-060b42c7cecc', '', 'New',
-        'Jade tissue with a shimmer in the weave and embroidery along the pallu.'],
-    ['moonlight-organza', 'Moonlight White Organza Saree', 'saree', 'organza', 'party', 3900, '1670955108982-921a94cbe35f', '', '',
-        'Crisp white organza that holds its pleats and catches the light.'],
-    ['green-ruffle-gold', 'Green Ruffle Saree with Gold Trim', 'saree', 'georgette', 'party', 4600, '1756483509177-bbabd67a3234', '', '',
-        'Bottle green georgette with soft ruffles edged in gold.'],
-    ['scarlet-party', 'Scarlet Party Saree', 'saree', 'georgette', 'party', 3200, '1610030469668-8e9f641aaf27', '', '',
-        'Scarlet georgette with a shimmer border, made for sangeet nights.'],
-    ['printed-georgette', 'Printed Georgette Saree', 'saree', 'georgette', 'everyday', 1900, '1769275061202-cf3ef67d7279', '', '',
-        'An easy printed georgette for office, temple and family lunches.'],
-    ['red-floral-chiffon', 'Red Floral Chiffon Saree', 'saree', 'chiffon', 'party', 2500, '1610047520958-b42ebcd2f6cb', '', '',
-        'Red chiffon covered in florals, light enough for the summer wedding season.'],
-    ['lilac-floral-chiffon', 'Lilac Floral Chiffon Saree', 'saree', 'chiffon', 'everyday', 2700, '1610189026297-df356264479c', '', '',
-        'Purple and white florals on flowing chiffon.'],
-    ['laal-paar-tant', 'Laal Paar Bengal Tant Saree', 'saree', 'handloom', 'festive', 2200, '1726076584498-2064363f8b5a', '', 'Handloom',
-        'The classic white Bengal cotton with a red border, worn for Durga Puja and every celebration after.'],
-    ['marigold-handloom', 'Marigold Handloom Cotton Saree', 'saree', 'handloom', 'everyday', 1800, '1612273882937-44c5313400e5', '', '',
-        'Yellow and purple handloom cotton that softens with every wash.'],
-    ['mehendi-cotton', 'Mehendi Green Cotton Saree', 'saree', 'handloom', 'everyday', 1600, '1770838447151-05a876cdee3d', '', '',
-        'Cool green cotton for warm days, with a woven border.'],
-    ['indigo-mulmul', 'Indigo & White Mulmul Saree', 'saree', 'handloom', 'everyday', 1900, '1739429942576-61aa75c97403', '', '',
-        'Soft mulmul cotton in indigo and white. Breathes in the Mauritian heat.'],
-
-    ['antique-jhumkas', 'Antique Gold Jhumkas', 'jewellery', 'jewellery', 'festive', 1450, '1714733831162-0a6e849141be', '', '',
-        'Antique finish bell jhumkas with fine filigree. Light enough to wear all evening.'],
-    ['gold-beaded-bracelet', 'Gold Beaded Bracelet', 'jewellery', 'jewellery', 'party', 980, '1616756141603-6d37d5cde2a2', '', '',
-        'Gold and silver beads on a soft stretch, made to stack with bangles.'],
-    ['bridal-bangle-set', 'Bridal Bangle Set', 'jewellery', 'jewellery', 'bridal', 2200, '1612945578381-6481cdd73b0a', '', 'Bridal',
-        'A full set of red and gold bridal bangles for both wrists.'],
-    ['oxidised-silver-necklace', 'Oxidised Silver Necklace', 'jewellery', 'jewellery', 'festive', 3200, '1616756351484-798f37bdffa0', '', '',
-        'A statement silver necklace that sits beautifully with ivory and cotton sarees.'],
-    ['turquoise-pearl-set', 'Turquoise & Pearl Silver Set', 'jewellery', 'jewellery', 'party', 2600, '1767971958465-16d986fad8df', '', '',
-        'Silver set with turquoise and pearl accents, for pastel and white drapes.'],
-    ['glass-bangle-stack', 'Glass Bangle Stack', 'jewellery', 'jewellery', 'everyday', 450, '1709456533985-254ebb7b00db', '', '',
-        'A colourful stack of glass bangles. Mix with gold for festive days.']
+    ["red-banarasi-silk-saree", "Red Banarasi Silk Saree", 'saree', 'saree', '', 4500, '1610030469983-98e550d6193c', '1610030469668-8e9f641aaf27', "Bestseller",
+        "Pure silk from the looms of Varanasi with a woven gold zari border. The red saree every wardrobe needs once."],
+    ["emerald-silk-saree", "Emerald Silk Saree", 'saree', 'saree', '', 3900, '1679006831648-7c9ea12e5807', '1727430228383-aa1fb59db8bf', "",
+        "Deep emerald silk with a fine gold border that catches the light at every step."],
+    ["purple-gold-kanjeevaram-saree", "Purple & Gold Kanjeevaram Saree", 'saree', 'saree', '', 6500, '1641699862936-be9f49b1c38d', '1610030469983-98e550d6193c', "New",
+        "Heavy silk from Kanchipuram in royal purple with a rich gold border and pallu."],
+    ["coral-silk-saree", "Coral Silk Saree", 'saree', 'saree', '', 2900, '1617627143750-d86bc21e42bb', '1769275061202-cf3ef67d7279', "",
+        "Soft coral silk with a gold border. Light to wear and easy to drape."],
+    ["printed-georgette-saree", "Printed Georgette Saree", 'saree', 'saree', '', 1900, '1769275061202-cf3ef67d7279', '1617627143750-d86bc21e42bb', "",
+        "An easy printed georgette for office, temple and family lunches."],
+    ["wedding-guest-saree", "Wedding Guest Saree", 'saree', 'saree', '', 3500, '1727430228383-aa1fb59db8bf', '1679006831648-7c9ea12e5807', "",
+        "A rich festive saree that looks right at every wedding you are invited to this season."],
+    ["red-floral-saree", "Red Floral Saree", 'saree', 'saree', '', 2500, '1610047520958-b42ebcd2f6cb', '1610030469668-8e9f641aaf27', "",
+        "Red florals on a flowing drape, light enough for the summer wedding season."],
+    ["scarlet-party-saree", "Scarlet Party Saree", 'saree', 'saree', '', 3200, '1610030469668-8e9f641aaf27', '1610047520958-b42ebcd2f6cb', "",
+        "Scarlet with a shimmer border, made for sangeet nights."],
+    ["crimson-zari-bridal-lehenga", "Crimson Zari Bridal Lehenga", 'outfit', 'bridal', 'bridal', 18500, '1721324807083-e9ddaa99310e', '1654764746225-e63f5e90facd', "Bestseller",
+        "A bridal lehenga made for the wedding day: heavy work, a full flare and a matching dupatta."],
+    ["royal-red-bridal-lehenga", "Royal Red Bridal Lehenga", 'outfit', 'bridal', 'bridal', 21900, '1610047614301-13c63f00c032', '1610047614256-023d7c028d0b', "New",
+        "A bridal lehenga made for the wedding day: heavy work, a full flare and a matching dupatta."],
+    ["wine-velvet-bridal-lehenga", "Wine Velvet Bridal Lehenga", 'outfit', 'bridal', 'bridal', 24500, '1740674570259-a47d713a2976', '1677691257363-eebd2abeafec', "",
+        "A bridal lehenga made for the wedding day: heavy work, a full flare and a matching dupatta."],
+    ["red-gold-bridal-set", "Red & Gold Bridal Set", 'outfit', 'bridal', 'bridal', 16900, '1677691257363-eebd2abeafec', '1707576618343-26a1b377ca7a', "",
+        "A bridal lehenga made for the wedding day: heavy work, a full flare and a matching dupatta."],
+    ["rose-bridal-lehenga", "Rose Bridal Lehenga", 'outfit', 'bridal', 'bridal', 19500, '1629118477133-b8b1499f2b8a', '1662714802102-9825504458ca', "",
+        "A bridal lehenga made for the wedding day: heavy work, a full flare and a matching dupatta."],
+    ["maroon-embroidered-bridal-lehenga", "Maroon Embroidered Bridal Lehenga", 'outfit', 'bridal', 'bridal', 14900, '1707576618343-26a1b377ca7a', '1737514996816-a034a795febe', "",
+        "A bridal lehenga made for the wedding day: heavy work, a full flare and a matching dupatta."],
+    ["ivory-red-bridal-lehenga", "Ivory & Red Bridal Lehenga", 'outfit', 'bridal', 'bridal', 22500, '1737514996816-a034a795febe', '1610047614301-13c63f00c032', "New",
+        "A bridal lehenga made for the wedding day: heavy work, a full flare and a matching dupatta."],
+    ["heritage-red-bridal-lehenga", "Heritage Red Bridal Lehenga", 'outfit', 'bridal', 'bridal', 12900, '1662714802102-9825504458ca', '1721324807083-e9ddaa99310e', "",
+        "A bridal lehenga made for the wedding day: heavy work, a full flare and a matching dupatta."],
+    ["pink-mirror-work-lehenga", "Pink Mirror-Work Lehenga", 'outfit', 'lehenga', '', 5900, '1733937140732-2cc70a1d7017', '1746372283841-dbb3838f9935', "New",
+        "A festive lehenga for sangeet, mehendi and wedding-guest days, with a matching dupatta."],
+    ["maroon-sequin-lehenga", "Maroon Sequin Lehenga", 'outfit', 'lehenga', '', 6500, '1756483488645-5973a1a92e33', '1610047614222-d33c39abfab2', "Bestseller",
+        "A festive lehenga for sangeet, mehendi and wedding-guest days, with a matching dupatta."],
+    ["lavender-floral-lehenga", "Lavender Floral Lehenga", 'outfit', 'lehenga', '', 4500, '1617039487629-6babdcb2a24b', '1733937140732-2cc70a1d7017', "",
+        "A festive lehenga for sangeet, mehendi and wedding-guest days, with a matching dupatta."],
+    ["mustard-bandhani-lehenga", "Mustard Bandhani Lehenga", 'outfit', 'lehenga', '', 3900, '1746372283841-dbb3838f9935', '1668371459824-094a960a227d', "",
+        "A festive lehenga for sangeet, mehendi and wedding-guest days, with a matching dupatta."],
+    ["red-festive-lehenga", "Red Festive Lehenga", 'outfit', 'lehenga', '', 4900, '1610047614222-d33c39abfab2', '1756483488645-5973a1a92e33', "",
+        "A festive lehenga for sangeet, mehendi and wedding-guest days, with a matching dupatta."],
+    ["rust-silk-lehenga", "Rust Silk Lehenga", 'outfit', 'lehenga', '', 3500, '1668371459824-094a960a227d', '1617039487629-6babdcb2a24b', "",
+        "A festive lehenga for sangeet, mehendi and wedding-guest days, with a matching dupatta."],
+    ["black-gold-anarkali", "Black & Gold Anarkali", 'outfit', 'gown', '', 4900, '1761571260010-8aa90a08c934', '1610202305255-746aa5b971c4', "New",
+        "A floor-length piece with an easy fit, made for receptions and family celebrations."],
+    ["red-embroidered-anarkali", "Red Embroidered Anarkali", 'outfit', 'gown', '', 4200, '1610202305255-746aa5b971c4', '1638457130899-121a2dc59513', "",
+        "A floor-length piece with an easy fit, made for receptions and family celebrations."],
+    ["blush-pink-anarkali-gown", "Blush Pink Anarkali Gown", 'outfit', 'gown', '', 3800, '1669195987863-f935f728e41b', '1649139798873-683a18de1151', "Bestseller",
+        "A floor-length piece with an easy fit, made for receptions and family celebrations."],
+    ["powder-blue-gown", "Powder Blue Gown", 'outfit', 'gown', '', 3500, '1616583936499-d4116e7e2e76', '1678536517273-f1ec164966ea', "",
+        "A floor-length piece with an easy fit, made for receptions and family celebrations."],
+    ["ivory-flared-gown", "Ivory Flared Gown", 'outfit', 'gown', '', 4500, '1678536517273-f1ec164966ea', '1744833341427-6f2b4eac91ff', "",
+        "A floor-length piece with an easy fit, made for receptions and family celebrations."],
+    ["sage-embellished-gown", "Sage Embellished Gown", 'outfit', 'gown', '', 5200, '1744833341427-6f2b4eac91ff', '1756483509254-3cc48a5a15b2', "",
+        "A floor-length piece with an easy fit, made for receptions and family celebrations."],
+    ["pink-festive-suit", "Pink Festive Suit", 'outfit', 'gown', '', 2800, '1649139798873-683a18de1151', '1669195987863-f935f728e41b', "",
+        "A floor-length piece with an easy fit, made for receptions and family celebrations."],
+    ["red-party-anarkali", "Red Party Anarkali", 'outfit', 'gown', '', 3900, '1638457130899-121a2dc59513', '1610202305255-746aa5b971c4', "",
+        "A floor-length piece with an easy fit, made for receptions and family celebrations."],
+    ["ivory-embroidered-groom-sherwani", "Ivory Embroidered Groom Sherwani", 'outfit', 'groom', 'bridal', 12900, '1760080838961-4208536db385', '1678805408312-04e5fd7a9dcc', "Groom",
+        "A groom sherwani cut to sit sharp all day, ready to pair with a stole and mojaris."],
+    ["royal-maroon-sherwani-set", "Royal Maroon Sherwani Set", 'outfit', 'groom', 'bridal', 14500, '1576470189712-50fe3ec06b04', '1759906766080-82b785c61f51', "Bestseller",
+        "A groom sherwani cut to sit sharp all day, ready to pair with a stole and mojaris."],
+    ["complete-groom-sherwani-with-safa", "Complete Groom Sherwani with Safa", 'outfit', 'groom', 'bridal', 15900, '1759906766080-82b785c61f51', '1760080838961-4208536db385', "",
+        "A groom sherwani cut to sit sharp all day, ready to pair with a stole and mojaris."],
+    ["navy-sherwani", "Navy Sherwani", 'outfit', 'groom', 'bridal', 9900, '1534217466718-ef4950786e24', '1729347917808-e3e35a462fec', "",
+        "A groom sherwani cut to sit sharp all day, ready to pair with a stole and mojaris."],
+    ["white-floral-sherwani", "White Floral Sherwani", 'outfit', 'groom', 'bridal', 8500, '1678805408312-04e5fd7a9dcc', '1534217466718-ef4950786e24', "",
+        "A groom sherwani cut to sit sharp all day, ready to pair with a stole and mojaris."],
+    ["green-embroidered-kurta-set", "Green Embroidered Kurta Set", 'outfit', 'men', '', 2500, '1727835523545-70ee992b5763', '1727835523550-18478cacefa2', "",
+        "Men's festive wear for weddings, pujas and every family function."],
+    ["yellow-festive-kurta", "Yellow Festive Kurta", 'outfit', 'men', '', 1900, '1768807478320-fcfd3929acb2', '1768807478287-9e7953cfdca3', "New",
+        "Men's festive wear for weddings, pujas and every family function."],
+    ["blue-kurta-with-jacket", "Blue Kurta with Jacket", 'outfit', 'men', '', 3500, '1767775498862-d4740ce574ce', '1768807478320-fcfd3929acb2', "Bestseller",
+        "Men's festive wear for weddings, pujas and every family function."],
+    ["black-kurta-pyjama", "Black Kurta Pyjama", 'outfit', 'men', '', 2200, '1711044871601-301f9b0ecf91', '1744551358303-46edae8b374b', "",
+        "Men's festive wear for weddings, pujas and every family function."],
+    ["ivory-indo-western-set", "Ivory Indo-Western Set", 'outfit', 'men', '', 6500, '1729347917808-e3e35a462fec', '1727835523550-18478cacefa2', "",
+        "Men's festive wear for weddings, pujas and every family function."]
 ].map(r => ({
     id: r[0], name: r[1], kind: r[2], fabric: r[3], occasion: r[4], price: r[5], img: r[6], img2: r[7], tag: r[8], text: r[9]
 }));
 
-/* The six runway looks, in order. pos is the focal point of the photo. */
+/* The six runway looks, in order. pos is the focal point of the photo; pieces are the two items shown in the rail. */
 HS.LOOKS = [
-    { name: 'Panna', title: 'Emerald Banarasi', img: '1756483492198-8ca91227489b', pos: '50% 22%', pieces: ['panna-emerald-banarasi', 'antique-jhumkas'],
-      story: 'Emerald silk from Varanasi, worn the old way with an ornate blouse and antique gold at the ears.' },
-    { name: 'Chandni', title: 'Ivory Ruffle', img: '1756483510889-dd6c3d9e0a17', pos: '50% 22%', pieces: ['chandni-ivory-ruffle', 'gold-beaded-bracelet'],
-      story: 'Moonlight in georgette. Ruffles fall from the pallu and the whole drape moves like water.' },
-    { name: 'Rani', title: 'Red Velvet Bridal', img: '1756483496916-5ebab85028df', pos: '50% 20%', pieces: ['rani-red-velvet-bridal', 'bridal-bangle-set'],
-      story: 'For the bride. Red silk velvet, hand embroidered in gold zardozi, finished with a full set of bridal bangles.' },
-    { name: 'Kora', title: 'Ivory Embroidered', img: '1787753650890-bae0eb536cf5', pos: '50% 25%', pieces: ['kora-ivory-embroidered', 'oxidised-silver-necklace'],
-      story: 'Cream silk, a red blouse and old silver. Simple pieces that make a strong look together.' },
-    { name: 'Shubhra', title: 'Pearl White', img: '1756483510837-e79455e52188', pos: '50% 20%', pieces: ['shubhra-pearl-white', 'turquoise-pearl-set'],
-      story: 'White organza scattered with pearls, for receptions that run late into the night.' },
-    { name: 'Gulabi', title: 'Rose Chiffon', img: '1729101146067-4432849b7029', pos: '50% 22%', pieces: ['gulabi-rose-chiffon', 'glass-bangle-stack'],
-      story: 'Rose chiffon and a stack of glass bangles. Light, bright and made for dancing.' }
+    { name: 'Lal', title: 'Red Banarasi', img: '1610030469983-98e550d6193c', pos: '50% 18%', pieces: ['red-banarasi-silk-saree', 'scarlet-party-saree'],
+      story: 'Red silk from Varanasi with a gold zari border. The saree of weddings, worn the classic way.' },
+    { name: 'Panna', title: 'Emerald Silk', img: '1679006831648-7c9ea12e5807', pos: '50% 18%', pieces: ['emerald-silk-saree', 'printed-georgette-saree'],
+      story: 'Emerald silk with a fine gold border, for the wedding guest who wants to be remembered.' },
+    { name: 'Rani', title: 'Purple Kanjeevaram', img: '1641699862936-be9f49b1c38d', pos: '50% 18%', pieces: ['purple-gold-kanjeevaram-saree', 'crimson-zari-bridal-lehenga'],
+      story: 'Heavy Kanchipuram silk in royal purple and gold. A saree with the presence of a bridal lehenga.' },
+    { name: 'Gulabi', title: 'Coral Silk', img: '1617627143750-d86bc21e42bb', pos: '50% 18%', pieces: ['coral-silk-saree', 'pink-mirror-work-lehenga'],
+      story: 'Coral and pink with gold at the border, made for haldi mornings and garden functions.' },
+    { name: 'Utsav', title: 'Festive Silk', img: '1727430228383-aa1fb59db8bf', pos: '50% 18%', pieces: ['wedding-guest-saree', 'blush-pink-anarkali-gown'],
+      story: 'A rich festive drape for the reception, the sangeet and every celebration in between.' },
+    { name: 'Phool', title: 'Red Floral', img: '1610047520958-b42ebcd2f6cb', pos: '50% 18%', pieces: ['red-floral-saree', 'red-embroidered-anarkali'],
+      story: 'Red florals on a light, flowing drape. Easy to wear from the first ceremony to the last dance.' }
 ];
